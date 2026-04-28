@@ -52,7 +52,7 @@ export default function LoginPage() {
     event.preventDefault();
     setMessage("Signing you in...");
     window.setTimeout(() => {
-      setLocation("/dashboard");
+      setLocation("/setup");
     }, 350);
   }
 

@@ -7,11 +7,13 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import LoginPage from "@/pages/login";
 import DashboardPage from "@/pages/dashboard";
+import SetupPage from "@/pages/setup";
 
 function AppRouter() {
   return (
     <Switch>
       <Route path="/" component={LoginPage} />
+      <Route path="/setup" component={SetupPage} />
       <Route path="/dashboard" component={DashboardPage} />
       <Route component={NotFound} />
     </Switch>
