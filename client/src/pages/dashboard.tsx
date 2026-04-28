@@ -365,6 +365,22 @@ export default function DashboardPage() {
     setConfirmText("");
   }
 
+  function openGuardrailForBest() {
+    const readyForApproval = opportunities.find(
+      (o) => o.status === "Brief Ready" && !submittedIds.includes(o.id),
+    );
+    const target =
+      readyForApproval ??
+      opportunities.find((o) => !submittedIds.includes(o.id)) ??
+      opportunities[0];
+    if (!target) return;
+    if (target.status !== "Brief Ready") {
+      generateBrief(target);
+    }
+    openSubmissionDialog(target);
+    logActivity(`Submission guardrail opened for ${target.name}.`);
+  }
+
   function confirmSubmission() {
     if (!submissionTarget) return;
     setSubmittedIds((current) => [...current, submissionTarget.id]);
@@ -950,15 +966,26 @@ export default function DashboardPage() {
                 </p>
               </div>
             </div>
-            <Button
-              variant="outline"
-              className="rounded-xl"
-              type="button"
-              onClick={() => setLocation("/setup")}
-              data-testid="button-back-to-setup"
-            >
-              Back to setup
-            </Button>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                type="button"
+                className="rounded-xl"
+                onClick={openGuardrailForBest}
+                data-testid="button-open-guardrail"
+              >
+                <Lock className="h-4 w-4" aria-hidden="true" />
+                Approved — Submit This
+              </Button>
+              <Button
+                variant="outline"
+                className="rounded-xl"
+                type="button"
+                onClick={() => setLocation("/setup")}
+                data-testid="button-back-to-setup"
+              >
+                Back to setup
+              </Button>
+            </div>
           </div>
         </section>
       </section>
